@@ -11,8 +11,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
     <!-- If the query includes 'print-pdf', use the PDF print sheet -->
-    <script>
-      document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+    <script type="text/javascript">
+    var stylesheet = '';
+
+    if (window.location.search.match(/print-pdf/gi)) {
+      stylesheet = '<%= stylesheet_link_tag 'print/pdf', :media => :print %> ';
+    } else {
+      stylesheet = '<%= stylesheet_link_tag 'print/paper', :media => :print %> ';
+    }
+
+    document.write(stylesheet);
     </script>
   </head>
 
