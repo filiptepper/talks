@@ -10,7 +10,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-    <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+    <script type="text/javascript" src="http://127.0.0.1:4569/client.js"></script>
     <script type="text/javascript">
     var stylesheet = '';
 
@@ -21,6 +21,15 @@
     }
 
     document.write(stylesheet);
+
+    var client = new Faye.Client('http://localhost:4569/');
+    var subscription = client.subscribe('/controller', function(message) {
+      console.log(message);
+      switch(message) {
+        case 'next': Reveal.right(); break;
+        case 'previous': Reveal.left(); break;
+      }
+    });
     </script>
   </head>
 
