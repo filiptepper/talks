@@ -12,14 +12,36 @@ __END__
 <!doctype html>
 <html lang="en">
   <head>
-    <meta name="viewport" content="width=100, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
 
     <title>Presentation Controller</title>
 
     <style>
+    html, body {
+      height: 100%;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
     button {
+      background-color: #eeeeee;
+      border: 1px solid #eeeeee;
       display: block;
-      margin: 10px auto;
+      font-size: 10em;
+      margin: 0 auto;
+      width: 90%;
+    }
+
+    #next {
+      height: 65%;
+    }
+
+    #previous {
+      height: 30%;
+      margin-top: 5%;
     }
     </style>
   </head>
