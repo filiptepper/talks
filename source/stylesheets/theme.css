@@ -143,3 +143,10 @@ body {
 .red {
   color: #ff2c2d;
 }
+
+.reveal li {
+  font-size: 1.55em;
+  line-height: 1.55em;
+  list-style-type: square;
+  margin-left: 100px;
+}
