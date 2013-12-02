@@ -10,9 +10,25 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-    <!-- If the query includes 'print-pdf', use the PDF print sheet -->
-    <script>
-      document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+    <script type="text/javascript" src="http://127.0.0.1:4569/client.js"></script>
+    <script type="text/javascript">
+    var stylesheet = '';
+
+    if (window.location.search.match(/print-pdf/gi)) {
+      stylesheet = '<link href="../../stylesheets/print/pdf.css" media="print" rel="stylesheet" type="text/css" /> ';
+    } else {
+      stylesheet = '<link href="../../stylesheets/print/paper.css" media="print" rel="stylesheet" type="text/css" /> ';
+    }
+
+    document.write(stylesheet);
+
+    var client = new Faye.Client('http://localhost:4569/');
+    var subscription = client.subscribe('/controller', function(message) {
+      switch(message) {
+        case 'next': Reveal.right(); break;
+        case 'previous': Reveal.left(); break;
+      }
+    });
     </script>
   </head>
 
@@ -20,7 +36,202 @@
     <div class="reveal">
       <div class="slides">
       <section>
-  Hello, world.
+  <h1>Heroku</h1>
+  <h2>Praktycznie</h2>
+</section>
+<section class='img-valign-middle'>
+  <h2>Filip Tepper</h2>
+  <img src="../../images/logos/durszlak.png" />
+  <a href="http://durszlak.pl/">durszlak.pl</a>
+  <br>
+  <img src="../../images/logos/taptera.png" />
+  <a href="http://taptera.com/">taptera.com</a>
+  <br>
+  <img src="../../images/logos/blog.png" />
+  <a href="http://killingcreativity.com/">killingcreativity.com</a>
+  <br>
+  <img src="../../images/logos/blog.png" />
+  <a href="http://filiptepper.github.io/">filiptepper.github.io</a>
+</section>
+<section>
+  <h4>Czym jest Heroku?</h4>
+  <p class='fragment h3'>Platform as a Service</p>
+</section>
+<section>
+  <h3>Platform as a Service</h3>
+  <blockqoute>
+    Usługa dostarczająca rozwiązania sprzętowe oraz oprogramowanie
+    (środowisko) dla aplikacji.
+  </blockqoute>
+</section>
+<section>
+  Gdzie mogę uruchomić moją aplikację?
+</section>
+<section class='img-valign-middle'>
+  <img src="../../images/2013-heroku-wrug/hand.png" />
+  <span class='padded'>versus</span>
+  <img src="../../images/2013-heroku-wrug/cloud.png" />
+</section>
+<section>
+  <h3>IaaS</h3>
+  <span class='padded'>versus</span>
+  <h3>PaaS</h3>
+</section>
+<section>
+  <img src="../../images/2013-heroku-wrug/limit.png" />
+</section>
+<section>
+  <h2>Ograniczenia platformy</h2>
+</section>
+<section data-background='#d53c33'>
+  <h3>Slug</h3>
+  <p class='fragment'>Skompresowany i gotowy do dystrybucji obraz aplikacji.</p>
+</section>
+<section data-background='#d53c33'>
+  <h3>Slug</h3>
+  ograniczenia
+  <ul>
+    <li class='fragment'>15 minut kompilacji</li>
+    <li class='fragment'>300 MB rozmiaru</li>
+  </ul>
+</section>
+<section data-background='#d53c33'>
+  <h3>Slug</h3>
+  rozwiązanie
+  <ul>
+    <li class='fragment'>.slugignore</li>
+  </ul>
+</section>
+<section data-background='#e89015'>
+  <h3>Boot timeout</h3>
+  <p class='fragment'>Czas, w jakim aplikacja jest gotowa do opowiedzi.</p>
+</section>
+<section data-background='#e89015'>
+  <h3>Boot timeout</h3>
+  ograniczenia
+  <ul>
+    <li class='fragment'>60 sekund</li>
+  </ul>
+</section>
+<section data-background='#e89015'>
+  <h3>Boot timeout</h3>
+  rozwiązanie
+  <ul>
+    <li class='fragment'>Trinidad (JRuby)</li>
+  </ul>
+</section>
+<section data-background='#202f6d'>
+  <h3>Request timeout</h3>
+  <p class='fragment'>Maksymalny czas odpowiedzi aplikacji.</p>
+</section>
+<section data-background='#202f6d'>
+  <h3>Request timeout</h3>
+  ograniczenia
+  <ul>
+    <li class='fragment'>30 sekund</li>
+  </ul>
+</section>
+<section data-background='#202f6d'>
+  <h3>Request timeout</h3>
+  rozwiązanie
+  <ul>
+    <li class='fragment'>brak</li>
+    <li class='fragment'>monitorowanie!</li>
+    <li class='fragment'>procesy w tle</li>
+  </ul>
+</section>
+<section data-background='#202f6d'>
+  <h3>Request timeout</h3>
+  Ładowanie plików.
+</section>
+<section data-background='#202f6d'>
+  <img src="../../images/2013-heroku-wrug/uploads-1.jpg" />
+</section>
+<section data-background='#202f6d'>
+  <img src="../../images/2013-heroku-wrug/uploads-2.jpg" />
+</section>
+<section data-background='#c97b91'>
+  <h3>rails_12factor</h3>
+  <a href="http://12factor.net/">The Twelve-Factor App</a>
+</section>
+<section data-background='#c97b91'>
+  <h3>rails_12factor</h3>
+  rozwiązanie
+  <ul>
+    <li class='fragment'>brak</li>
+  </ul>
+</section>
+<section>
+  <h2>Ograniczenia praktyczne</h2>
+</section>
+<section data-background='#44d699'>
+  <h3>Logowanie</h3>
+</section>
+<section data-background='#44d699'>
+  <h3>Logowanie</h3>
+  zewnętrzne
+  <ul>
+    <li>papertrail</li>
+    <li>loggly</li>
+  </ul>
+</section>
+<section data-background='#44d699'>
+  <h3>Deployment</h3>
+</section>
+<section data-background='#44d699'>
+  <h3>Deployment</h3>
+  ograniczenia
+  <ul>
+    <li class='fragment'>czas</li>
+    <li class='fragment'>zero downtime</li>
+  </ul>
+</section>
+<section data-background='#44d699'>
+  <h3>Deployment</h3>
+  rozwiązanie
+  <ul>
+    <li class='fragment'>
+      preboot
+    </li>
+  </ul>
+</section>
+<section data-background='#000000'>
+  <h3>Monitorowanie</h3>
+</section>
+<section data-background='#000000'>
+  <h3>Monitorowanie</h3>
+  ograniczenia
+  <ul>
+    <li class='fragment'>tylko aplikacja</li>
+  </ul>
+</section>
+<section data-background='#000000'>
+  <h3>Monitorowanie</h3>
+  rozwiązanie
+  <ul>
+    <li class='fragment'>
+      brak
+    </li>
+  </ul>
+</section>
+<section data-background='#d53c33'>
+  <h1>CENA</h1>
+</section>
+<section>
+  <h3>Czy warto?</h3>
+  <span class='fragment'>
+    tak!
+    <span class='red'>ale</span>
+  </span>
+  <ul>
+    <li class='fragment'>prototyp</li>
+    <li class='fragment'>MVP</li>
+    <li class='fragment'>YMMV</li>
+  </ul>
+</section>
+<section>
+  <h2>Dziękuję!</h2>
+  <img src="../../images/2013-heroku-wrug/clapping.gif" />
 </section>
 
       </div>

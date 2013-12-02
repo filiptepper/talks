@@ -10,9 +10,25 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-    <!-- If the query includes 'print-pdf', use the PDF print sheet -->
-    <script>
-      document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+    <script type="text/javascript" src="http://127.0.0.1:4569/client.js"></script>
+    <script type="text/javascript">
+    var stylesheet = '';
+
+    if (window.location.search.match(/print-pdf/gi)) {
+      stylesheet = '<link href="stylesheets/print/pdf.css" media="print" rel="stylesheet" type="text/css" /> ';
+    } else {
+      stylesheet = '<link href="stylesheets/print/paper.css" media="print" rel="stylesheet" type="text/css" /> ';
+    }
+
+    document.write(stylesheet);
+
+    var client = new Faye.Client('http://localhost:4569/');
+    var subscription = client.subscribe('/controller', function(message) {
+      switch(message) {
+        case 'next': Reveal.right(); break;
+        case 'previous': Reveal.left(); break;
+      }
+    });
     </script>
   </head>
 
